@@ -90,7 +90,7 @@
         $("#bploading").text("実行中");
         (async function(){
   var obniz, led, speaker;
-  
+  const lineNotify = require('line-notify-nodejs')('o5I3dUaZTStqCC7h0OXlmRXTDSJ7MDCtlRdlrocCYfJ');
   
   obniz = new Obniz('4601-3710');
   await obniz.connectWait();
