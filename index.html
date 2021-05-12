@@ -1,0 +1,116 @@
+
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <h3 id="bploading" style="text-align:center;">ロード中...</h3>
+    <div id="OBNIZ_OUTPUT"></div>
+    <br />
+    
+    <script
+      src="https://unpkg.com/obniz@latest/obniz.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/iothome/index.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/airobot/index.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ui/index.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/howler2.1.2/howler.js"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/opencv3.4/opencv.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.3.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.2"></script>
+    
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/clmtrackr/clmtrackr.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/clmtrackr/emotion_classifier.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/clmtrackr/emotionmodel.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/clmtrackr/model_pca_20_svm.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/ai/index.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/obniz-parts-kits@0.16.0/storage/index.js"
+      crossorigin="anonymous"
+    ></script>
+
+    
+    <script>
+        $("#bploading").text("実行中");
+        (async function(){
+  var obniz, led, speaker;
+  
+  
+  obniz = new Obniz('4601-3710');
+  await obniz.connectWait();
+  obniz.display.print('Please')
+  obniz.display.print('push switch!')
+  await _ai.startCamWait();
+  led = obniz.wired("LED",{"anode":0, "cathode":1});
+  speaker = obniz.wired("Speaker",{"signal":2, "gnd":3});
+  while (true) {
+  await ObnizUI.Util.wait(0);
+    if ((await obniz.switch.getWait() == 'push')) {
+      speaker.play(262);await ObnizUI.Util.wait(1*500);speaker.stop();;
+      led.on();
+      await ObnizUI.Util.wait(500);
+      led.off();
+      await ObnizUI.Util.wait(500);
+    }
+    if ((await _ai.classify()).includes('lemon')) {
+      await _ai.say('ザ・テレビジョン');
+      await ObnizUI.Util.wait(10000);
+    }
+  }
+  
+})();
+    
+    </script>
+  </body>
+</html>
