@@ -79,26 +79,11 @@
     <script
       src="https://unpkg.com/obniz-parts-kits@0.16.0/storage/index.js"
       crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://unpkg.com/axios/index.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://unpkg.com/querystring/index.js"
-      crossorigin="anonymous"
-    ></script>
-
-    <script
-      src="https://unpkg.com/line-notify-nodejs/index.js"
-      crossorigin="anonymous"
-    ></script>
-    
+    ></script>    
     <script>
         $("#bploading").text("実行中");
         (async function(){
   var obniz, led, speaker;
-  //const lineNotify = require('line-notify-nodejs')('o5I3dUaZTStqCC7h0OXlmRXTDSJ7MDCtlRdlrocCYfJ');
   
   obniz = new Obniz('4601-3710');
   await obniz.connectWait();
